@@ -44,7 +44,7 @@ def calculate():
                 qi_per_week = 180000
                 wbtc_total_debt = df['debt'].sum()
                 wbtc_address_debt = df.query(f"owner == '{address}'")['debt'].sum()
-                wbtc_vault_share = wbtc_address_debt/wbtc_total_debt
+                wbtc_vault_share = wbtc_address_debt/wbtc_total_debt*100
                 wbtc_max_qi_week = wbtc_vault_share*qi_per_week
                 wbtc_max_qi_gauge = wbtc_max_qi_week * 2
                 wbtc_value_one_pct = wbtc_max_qi_gauge/100
@@ -61,7 +61,7 @@ def calculate():
                 qi_per_week = 180000
                 weth_total_debt = df['debt'].sum()
                 weth_address_debt = df.query(f"owner == '{address}'")['debt'].sum()
-                weth_vault_share = weth_address_debt/weth_total_debt
+                weth_vault_share = weth_address_debt/weth_total_debt*100
                 weth_max_qi_week = weth_vault_share*qi_per_week
                 weth_max_qi_gauge = weth_max_qi_week * 2
                 weth_value_one_pct = weth_max_qi_gauge/100

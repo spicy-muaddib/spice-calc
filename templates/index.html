@@ -17,46 +17,40 @@
         <div class="form-group">
         Address<br>
         <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}">
-        <br>Vault:<br>
-
+        
+		 <!-- Hidden vault selection -->
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="1" id="flexCheckWBTC" name="mycheckbox" checked>
-          <label class="form-check-label" for="flexCheckWBTC">
-            WBTC
-          </label>
+          <input class="form-check-input" type="checkbox" hidden value="1" id="flexCheckWBTC" name="mycheckbox" checked>
+          <input class="form-check-input" type="checkbox" hidden value="2" id="flexCheckWETH" name="mycheckbox"  checked>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="2" id="flexCheckWETH" name="mycheckbox"  checked>
-          <label class="form-check-label" for="flexCheckWETH">
-            WETH
-          </label>
-        </div><br>
+
         <button type="submit" value="submit" class="btn btn-primary">Calculate</button>
+        </div>
     </form>
-    </div>
-    {% if wbtc_total_debt %}
+   
+    {% if wbtc_vault_share %}
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">WBTC Vault Data</th>
+            <th scope="col"><a href="https://optimistic.etherscan.io/address/0 0xb9c8f0d3254007ee4b98970b94544e473cd610ec" title="WETH Vault Contract on Optimistic Etherscan">WETH Vault Data</a></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Your Address</th>
-            <td>{{address}}</td>
+            <td><a href="https://optimistic.etherscan.io/address/{{address}}" title="Address on Optimistic Etherscan">{{address}}</a></td>
           </tr>
           <tr>
             <th scope="row">Total Debt</th>
-            <td>{{wbtc_total_debt}}</td>
+            <td>${{wbtc_total_debt}}</td>
           </tr>
           <tr>
             <th scope="row">Address Debt</th>
-            <td>{{wbtc_address_debt}}</td>
+            <td>${{wbtc_address_debt}}</td>
           </tr>
           <tr>
             <th scope="row">Vault Share</th>
-            <td>{{wbtc_vault_share}}</td>
+            <td>{{wbtc_vault_share}}%</td>
           </tr>
           <tr>
             <th scope="row">Max Qi to Me / Week</th>
@@ -77,29 +71,29 @@
         </tbody>
       </table>
       {% endif %}
-      {% if weth_total_debt %}
+      {% if weth_vault_share %}
     <table class="table">
         <thead>
           <tr>
-            <th scope="col">WETH Vault Data</th>
+            <th scope="col"><a href="https://optimistic.etherscan.io/address/0x062016cd29fabb26c52bab646878987fc9b0bc55" title="WETH Vault Contract on Optimistic Etherscan">WETH Vault Data</a></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Your Address</th>
-            <td>{{address}}</td>
+            <td><a href="https://optimistic.etherscan.io/address/{{address}}" title="Address on Optimistic Etherscan">{{address}}</a></td>
           </tr>
           <tr>
             <th scope="row">Total Debt</th>
-            <td>{{weth_total_debt}}</td>
+            <td>${{weth_total_debt}}</td>
           </tr>
           <tr>
             <th scope="row">Address Debt</th>
-            <td>{{weth_address_debt}}</td>
+            <td>${{weth_address_debt}}</td>
           </tr>
           <tr>
             <th scope="row">Vault Share</th>
-            <td>{{weth_vault_share}}</td>
+            <td>{{weth_vault_share}}%</td>
           </tr>
           <tr>
             <th scope="row">Max Qi to Me / Week</th>
