@@ -21,9 +21,7 @@
     <form action="/" method="POST">
         <div class="form-group">
         Address<br>
-        <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}" placeholder="">
-
-      		<p id="userWallet"></p>
+        <input id="userWallet" type="text" class="form-control" name="address" value="{{ request.form['address'] }}">
 
  
 		 <!-- Hidden vault selection -->
@@ -130,14 +128,13 @@
 	<script>
       window.userWalletAddress = null;
       const loginButton = document.getElementById("loginButton");
-      const userWallet = document.getElementById("userWallet")
+      const userWallet = document.getElementById("userWallet");
 
       function toggleButton() {
         if (!window.ethereum) {
           loginButton.innerText = "MetaMask is not installed";
           loginButton.classList.remove("btn-primary");
-          loginButton.classList.add(
-"btn-danger");
+          loginButton.classList.add("btn-danger");
           return false;
         }
 
@@ -156,7 +153,7 @@
         }
 
         window.userWalletAddress = accounts[0];
-        userWallet.innerText = window.userWalletAddress;
+        userWallet.setAttribute("value", window.userWalletAddress);
         loginButton.innerText = "Disconnect";
 
         loginButton.removeEventListener("click", loginWithMetaMask);
@@ -169,7 +166,7 @@
 
       function signOutOfMetaMask() {
         window.userWalletAddress = null;
-        userWallet.innerText = "";
+        userWallet.value = "";
         loginButton.innerText = "Connect";
         loginButton.removeEventListener("click", signOutOfMetaMask);
         loginButton.classList.remove("btn-danger");
