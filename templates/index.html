@@ -11,13 +11,21 @@
     <title>OP Alliance Calculator</title>
   </head>
   <body>
+
     <div class="container">
+		  <br />
+		  <div class="float-right">
+      		<button id="loginButton" onclick="" class="btn btn-primary btn-sm">Connect</button>
+   		  </div>
         <br><h2>OP Alliance Calculator</h2><br>
     <form action="/" method="POST">
         <div class="form-group">
         Address<br>
-        <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}">
-        
+        <input type="text" class="form-control" name="address" value="{{ request.form['address'] }}" placeholder="">
+
+      		<p id="userWallet"></p>
+
+ 
 		 <!-- Hidden vault selection -->
         <div class="form-check">
           <input class="form-check-input" type="checkbox" hidden value="1" id="flexCheckWBTC" name="mycheckbox" checked>
@@ -32,7 +40,7 @@
     <table class="table">
         <thead>
           <tr>
-            <th scope="col"><a href="https://optimistic.etherscan.io/address/0 0xb9c8f0d3254007ee4b98970b94544e473cd610ec" title="WETH Vault Contract on Optimistic Etherscan">WETH Vault Data</a></th>
+            <th scope="col"><a href="https://optimistic.etherscan.io/address/0xb9c8f0d3254007ee4b98970b94544e473cd610ec" title="WBTC Vault Contract on Optimistic Etherscan">WETH Vault Data</a></th>
           </tr>
         </thead>
         <tbody>
@@ -116,6 +124,66 @@
       {% endif %}
     </div>
 </body>
+
+	<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+	<script>
+      window.userWalletAddress = null;
+      const loginButton = document.getElementById("loginButton");
+      const userWallet = document.getElementById("userWallet")
+
+      function toggleButton() {
+        if (!window.ethereum) {
+          loginButton.innerText = "MetaMask is not installed";
+          loginButton.classList.remove("btn-primary");
+          loginButton.classList.add(
+"btn-danger");
+          return false;
+        }
+
+        loginButton.addEventListener("click", loginWithMetaMask);
+      }
+
+      async function loginWithMetaMask() {
+        const accounts = await window.ethereum
+          .request({ method: "eth_requestAccounts" })
+          .catch((e) => {
+            console.error(e.message);
+            return;
+          });
+        if (!accounts) {
+          return;
+        }
+
+        window.userWalletAddress = accounts[0];
+        userWallet.innerText = window.userWalletAddress;
+        loginButton.innerText = "Disconnect";
+
+        loginButton.removeEventListener("click", loginWithMetaMask);
+        loginButton.classList.remove("btn-primary");
+        loginButton.classList.add("btn-danger");
+        setTimeout(() => {
+          loginButton.addEventListener("click", signOutOfMetaMask);
+        }, 200);
+      }
+
+      function signOutOfMetaMask() {
+        window.userWalletAddress = null;
+        userWallet.innerText = "";
+        loginButton.innerText = "Connect";
+        loginButton.removeEventListener("click", signOutOfMetaMask);
+        loginButton.classList.remove("btn-danger");
+        loginButton.classList.add("btn-primary");
+        setTimeout(() => {
+          loginButton.addEventListener("click", loginWithMetaMask);
+        }, 200);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        toggleButton();
+      });
+    </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
